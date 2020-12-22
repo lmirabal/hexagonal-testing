@@ -8,25 +8,15 @@ import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
 import org.junit.jupiter.api.Test
 
-class BankServiceTest {
+class BankServiceTest : BankTest() {
     private val id = BankAccountId.random()
     private val idFactory = { id }
-    private val bank = BankService(InMemoryBankAccountRepository(), idFactory)
+    override val bank = BankService(InMemoryBankAccountRepository(), idFactory)
 
     @Test
     fun createsAnAccount() {
         val account = bank.createAccount()
 
         assertThat(account, equalTo(BankAccount(id, Amount.ZERO)))
-    }
-
-    @Test
-    fun listsAccounts() {
-        val account1 = bank.createAccount()
-        val account2 = bank.createAccount()
-
-        val accounts = bank.listAccounts()
-
-        assertThat(accounts, equalTo(listOf(account1, account2)))
     }
 }
