@@ -1,0 +1,6 @@
+# Gradle generated files
+build
+.gradle
+
+# Intellij generated files
+.idea
