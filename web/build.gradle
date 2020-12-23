@@ -1,0 +1,11 @@
+dependencies {
+    implementation project(':domain')
+    implementation project(':http')
+    implementation platform('org.http4k:http4k-bom:3.284.0')
+    implementation "org.http4k:http4k-core"
+    implementation "org.http4k:http4k-template-handlebars"
+
+    testImplementation testFixtures(project(':domain'))
+    testImplementation platform('org.http4k:http4k-bom:3.284.0')
+    testImplementation 'org.http4k:http4k-testing-webdriver'
+}

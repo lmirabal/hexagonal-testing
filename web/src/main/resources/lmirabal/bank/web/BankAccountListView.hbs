@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Bank</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+        th {
+            text-align: left;
+        }
+
+
+    </style>
+</head>
+<body>
+<div>
+    <h2>Create Account</h2>
+    <form method="POST" action="/">
+        <input type="submit" id="create-account" value="Create">
+    </form>
+    <h2>Bank Accounts</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#accounts}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{balance}}</td>
+            </tr>
+        {{/accounts}}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
