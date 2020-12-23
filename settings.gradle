@@ -1,3 +1,5 @@
 rootProject.name = 'bank'
 
 include ':domain'
+include ':http'
+include ':web'

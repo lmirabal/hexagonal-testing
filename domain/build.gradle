@@ -1,0 +1,13 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
+dependencies {
+    testFixturesImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testFixturesImplementation 'com.natpryce:hamkrest:1.8.0.1'
+}
+
+compileTestFixturesKotlin {
+    kotlinOptions.jvmTarget = '11'
+}
