@@ -46,7 +46,7 @@ object ListAccounts {
 
     private fun BankAccount.toViewModel() = BankAccountView(id.value.toString(), balance.format())
 
-    private fun Amount.format() = BigDecimal(minorUnits).movePointLeft(2).toPlainString()
+    private fun Amount.format() = BigDecimal(minorUnits).movePointLeft(2).longValueExact().toString()
 }
 
 data class BankAccountView(val id: String, val balance: String)
