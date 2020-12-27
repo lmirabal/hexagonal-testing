@@ -44,11 +44,6 @@ class BankWebDriver(web: HttpHandler) : Bank {
     }
 
     private fun WebElement.toBankAccount(): BankAccount {
-        fun WebElement.getBankAccountId(): BankAccountId {
-            val idText = getTableColumn(ID_INDEX)
-            return BankAccountId(UUID.fromString(idText))
-        }
-
         fun WebElement.getBalance(): Amount {
             val balanceTextInMajorUnits = getTableColumn(BALANCE_INDEX)
             val balanceInMinorUnits = BigDecimal(balanceTextInMajorUnits).movePointRight(2).toLong()
@@ -56,6 +51,19 @@ class BankWebDriver(web: HttpHandler) : Bank {
         }
 
         return BankAccount(getBankAccountId(), getBalance())
+    }
+
+    override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
+        val row = driver.getTableRows().first { row -> row.getBankAccountId() == id }
+
+        row.getElement(By.id("amount")).sendKeys(amount.format())
+        row.getElement(By.id("deposit")).submit()
+        return driver.getBankAccounts().first { account -> account.id == id }
+    }
+
+    private fun WebElement.getBankAccountId(): BankAccountId {
+        val idText = getTableColumn(ID_INDEX)
+        return BankAccountId(UUID.fromString(idText))
     }
 
     companion object {

@@ -11,12 +11,25 @@ class InMemoryBankAccountRepositoryTest {
     private val repository = InMemoryBankAccountRepository()
 
     @Test
-    fun persistsAccounts() {
+    fun `persists accounts`() {
         val account1 = BankAccount(BankAccountId.random(), Amount(10))
         repository.add(account1)
         val account2 = BankAccount(BankAccountId.random(), Amount(20))
         repository.add(account2)
 
         assertThat(repository.list(), equalTo(listOf(account1, account2)))
+    }
+
+    @Test
+    fun `updates existing accounts`() {
+        val account1 = BankAccount(BankAccountId.random(), Amount(10))
+        repository.add(account1)
+        val account2 = BankAccount(BankAccountId.random(), Amount(20))
+        repository.add(account2)
+
+        val updatedAccount1 = BankAccount(account1.id, Amount(50))
+        repository.update(updatedAccount1)
+
+        assertThat(repository.list(), equalTo(listOf(updatedAccount1, account2)))
     }
 }

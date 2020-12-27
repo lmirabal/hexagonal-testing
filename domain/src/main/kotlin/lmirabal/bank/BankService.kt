@@ -15,4 +15,10 @@ class BankService(
     }
 
     override fun listAccounts(): List<BankAccount> = accountRepository.list()
+
+    override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
+        val account = accountRepository.list().first { it.id == id }
+        return account.deposit(amount)
+            .also { updatedAccount -> accountRepository.update(updatedAccount) }
+    }
 }
