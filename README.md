@@ -31,6 +31,13 @@ This example mainly focuses in the contract defining how the business behaves as
 approach, but the same strategy can be applied to any other port. For examples, if there were multiple ways to
 store/query accounts, a single test could be defined to test all of them.
 
+## How to run
+
+The full stack can be run in a single jvm for demonstration purposes using `Main.kt` in the `web` project:
+```shell
+./gradlew :web:run
+```
+
 ## Technology
 
 The intention is to have as simple as possible code so very few external dependencies are used. It's implemented in
