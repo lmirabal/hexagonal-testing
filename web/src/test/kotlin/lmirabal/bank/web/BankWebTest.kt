@@ -61,6 +61,10 @@ class BankWebDriver(web: HttpHandler) : Bank {
         return driver.getBankAccounts().first { account -> account.id == id }
     }
 
+    override fun withdraw(id: BankAccountId, amount: Amount): BankAccount {
+        TODO("Not yet implemented")
+    }
+
     private fun WebElement.getBankAccountId(): BankAccountId {
         val idText = getTableColumn(ID_INDEX)
         return BankAccountId(UUID.fromString(idText))

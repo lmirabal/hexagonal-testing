@@ -9,6 +9,10 @@ data class Amount(val minorUnits: Long) {
         return Amount(minorUnits + other.minorUnits)
     }
 
+    operator fun minus(other: Amount): Amount {
+        return Amount(minorUnits - other.minorUnits)
+    }
+
     companion object {
         val ZERO = Amount(0)
     }

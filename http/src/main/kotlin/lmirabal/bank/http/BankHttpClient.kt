@@ -28,4 +28,8 @@ class BankHttpClient(val http: HttpHandler) : Bank {
         )
         return bankAccountLens(response)
     }
+
+    override fun withdraw(id: BankAccountId, amount: Amount): BankAccount {
+        TODO("Not yet implemented")
+    }
 }

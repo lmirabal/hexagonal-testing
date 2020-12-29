@@ -8,4 +8,5 @@ interface Bank {
     fun createAccount(): BankAccount
     fun listAccounts(): List<BankAccount>
     fun deposit(id: BankAccountId, amount: Amount): BankAccount
+    fun withdraw(id: BankAccountId, amount: Amount): BankAccount
 }

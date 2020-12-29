@@ -21,4 +21,10 @@ class BankService(
         return account.deposit(amount)
             .also { updatedAccount -> accountRepository.update(updatedAccount) }
     }
+
+    override fun withdraw(id: BankAccountId, amount: Amount): BankAccount {
+        val account = accountRepository.list().first { it.id == id }
+        return account.withdraw(amount)
+            .also { updatedAccount -> accountRepository.update(updatedAccount) }
+    }
 }

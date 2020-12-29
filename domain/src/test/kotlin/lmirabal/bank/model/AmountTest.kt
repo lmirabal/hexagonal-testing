@@ -17,4 +17,11 @@ class AmountTest {
 
         assertThat(result, equalTo(Amount(40)))
     }
+
+    @Test
+    fun subtracts() {
+        val result = Amount(30) - Amount(10)
+
+        assertThat(result, equalTo(Amount(20)))
+    }
 }

@@ -14,4 +14,14 @@ class BankAccountTest {
 
         assertThat(updatedAccount, equalTo(BankAccount(id, Amount(300))))
     }
+
+    @Test
+    fun `decreases balance on withdrawal`() {
+        val id = BankAccountId.random()
+        val account = BankAccount(id, Amount(300))
+
+        val updatedAccount = account.withdraw(Amount(200))
+
+        assertThat(updatedAccount, equalTo(BankAccount(id, Amount(100))))
+    }
 }

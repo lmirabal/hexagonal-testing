@@ -4,6 +4,8 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import lmirabal.bank.model.Amount
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.EnabledIf
+import org.junit.jupiter.api.extension.ExtensionContext
 
 abstract class BankTest {
     abstract val bank: Bank
@@ -27,4 +29,17 @@ abstract class BankTest {
 
         assertThat(updatedAccount.balance, equalTo(Amount(300)))
     }
+
+    @EnabledIf("implementationReady")
+    @Test
+    fun `withdraws from account`() {
+        val bankAccount = bank.createAccount()
+
+        bank.deposit(bankAccount.id, Amount(300))
+        val updatedAccount = bank.withdraw(bankAccount.id, Amount(200))
+
+        assertThat(updatedAccount.balance, equalTo(Amount(100)))
+    }
+
+    fun implementationReady(context: ExtensionContext) = "ImplementationReady" in context.tags
 }
