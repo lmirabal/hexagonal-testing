@@ -54,15 +54,20 @@ class BankWebDriver(web: HttpHandler) : Bank {
     }
 
     override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
-        val row = driver.getTableRows().first { row -> row.getBankAccountId() == id }
-
-        row.getElement(By.id("amount")).sendKeys(amount.format())
-        row.getElement(By.id("deposit")).submit()
-        return driver.getBankAccounts().first { account -> account.id == id }
+        return changeBalance("deposit", id, amount)
     }
 
     override fun withdraw(id: BankAccountId, amount: Amount): BankAccount {
-        TODO("Not yet implemented")
+        return changeBalance("withdraw", id, amount)
+    }
+
+    private fun changeBalance(actionId: String, id: BankAccountId, amount: Amount): BankAccount {
+        val row = driver.getTableRows().first { row -> row.getBankAccountId() == id }
+
+        val form = row.getElement(By.id("$actionId-form"))
+        form.getElement(By.id("amount")).sendKeys(amount.format())
+        form.getElement(By.id(actionId)).submit()
+        return driver.getBankAccounts().first { account -> account.id == id }
     }
 
     private fun WebElement.getBankAccountId(): BankAccountId {

@@ -9,6 +9,7 @@ import org.http4k.core.ContentType.Companion.TEXT_HTML
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
+import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.Status.Companion.SEE_OTHER
@@ -32,7 +33,8 @@ fun bankWeb(bank: Bank): HttpHandler {
             POST to CreateAccount(bank),
             GET to ListAccounts(bank)
         ),
-        "/{id}/deposit" bind POST to DepositAmount(bank)
+        "/{id}/deposit" bind POST to ChangeBalance(bank) { id, amount -> deposit(id, amount) },
+        "/{id}/withdraw" bind POST to ChangeBalance(bank) { id, amount -> withdraw(id, amount) },
     )
 }
 
@@ -56,16 +58,17 @@ object ListAccounts {
 
 }
 
-object DepositAmount {
+class ChangeBalance(private val bank: Bank, private val action: Bank.(BankAccountId, Amount) -> BankAccount) :
+    HttpHandler {
     private val amountField = FormField.long().map { majorUnits -> majorUnits.toAmount() }.required("amount")
     private val formBody = Body.webForm(Validator.Feedback, amountField).toLens()
 
-    operator fun invoke(bank: Bank): HttpHandler = { request ->
+    override fun invoke(request: Request): Response {
         val id = request.path("id") ?: throw Exception("Bank account id must be present")
         val form = formBody(request)
         val amount = amountField(form)
-        bank.deposit(BankAccountId(UUID.fromString(id)), amount)
-        Response(SEE_OTHER).header("location", "/")
+        action(bank, BankAccountId(UUID.fromString(id)), amount)
+        return Response(SEE_OTHER).header("location", "/")
     }
 
     private fun Long.toAmount() = Amount(

@@ -6,10 +6,8 @@ import lmirabal.bank.data.InMemoryBankAccountRepository
 import lmirabal.bank.model.Amount
 import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
-import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 
-@Tag("ImplementationReady")
 class BankServiceTest : BankTest() {
     private val idFactory = RecordingIdFactory()
     override val bank = BankService(InMemoryBankAccountRepository(), idFactory)

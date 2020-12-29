@@ -37,9 +37,13 @@
                 <td>{{id}}</td>
                 <td>{{balance}}</td>
                 <td>
-                    <form method="POST" action="/{{id}}/deposit">
+                    <form id="deposit-form" method="POST" action="/{{id}}/deposit">
                         <input type="number" id="amount" name="amount"/>
                         <button id="deposit">Deposit</button>
+                    </form>
+                    <form id="withdraw-form" method="POST" action="/{{id}}/withdraw">
+                        <input type="number" id="amount" name="amount"/>
+                        <button id="withdraw">Withdraw</button>
                     </form>
                 </td>
             </tr>
