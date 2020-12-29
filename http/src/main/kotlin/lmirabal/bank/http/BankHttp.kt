@@ -23,6 +23,7 @@ fun bankHttp() = bankHttp(BankService(InMemoryBankAccountRepository()))
 
 internal const val BANK_ACCOUNTS_BASE_URL = "/bank/accounts"
 internal const val BANK_ACCOUNT_DEPOSIT_PATH = "/{id}/deposit"
+internal const val BANK_ACCOUNT_WITHDRAWAL_PATH = "/{id}/withdraw"
 internal val bankAccountLens = Body.auto<BankAccount>().toLens()
 internal val bankAccountListLens = Body.auto<List<BankAccount>>().toLens()
 internal val accountIdLens = Path.map({ BankAccountId(UUID.fromString(it)) }, { it.value.toString() }).of("id")
@@ -40,6 +41,12 @@ internal fun bankHttp(bank: Bank): HttpHandler {
                 val amount = amountLens(request)
 
                 Response(OK).with(bankAccountLens of bank.deposit(accountId, amount))
+            },
+            BANK_ACCOUNT_WITHDRAWAL_PATH bind POST to { request ->
+                val accountId = accountIdLens(request)
+                val amount = amountLens(request)
+
+                Response(OK).with(bankAccountLens of bank.withdraw(accountId, amount))
             }
         ),
     )

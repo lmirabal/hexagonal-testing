@@ -22,14 +22,18 @@ class BankHttpClient(val http: HttpHandler) : Bank {
     }
 
     override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
-        val response = http(
-            Request(POST, BANK_ACCOUNTS_BASE_URL + BANK_ACCOUNT_DEPOSIT_PATH)
-                .with(accountIdLens of id, amountLens of amount)
-        )
-        return bankAccountLens(response)
+        return changeBalanceAction(BANK_ACCOUNT_DEPOSIT_PATH, id, amount)
     }
 
     override fun withdraw(id: BankAccountId, amount: Amount): BankAccount {
-        TODO("Not yet implemented")
+        return changeBalanceAction(BANK_ACCOUNT_WITHDRAWAL_PATH, id, amount)
+    }
+
+    private fun changeBalanceAction(actionPath: String, id: BankAccountId, amount: Amount): BankAccount {
+        val response = http(
+            Request(POST, BANK_ACCOUNTS_BASE_URL + actionPath)
+                .with(accountIdLens of id, amountLens of amount)
+        )
+        return bankAccountLens(response)
     }
 }

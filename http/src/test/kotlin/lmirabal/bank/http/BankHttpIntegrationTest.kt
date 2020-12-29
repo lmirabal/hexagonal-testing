@@ -9,7 +9,9 @@ import org.http4k.server.SunHttp
 import org.http4k.server.asServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Tag
 
+@Tag("ImplementationReady")
 class BankHttpIntegrationTest : BankTest() {
     private val server = bankHttp().asServer(SunHttp())
     override val bank = BankHttpClient(
