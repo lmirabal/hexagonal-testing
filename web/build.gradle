@@ -1,3 +1,7 @@
+plugins {
+    id 'application'
+}
+
 dependencies {
     implementation project(':domain')
     implementation project(':http')
@@ -8,4 +12,8 @@ dependencies {
     testImplementation testFixtures(project(':domain'))
     testImplementation platform('org.http4k:http4k-bom:3.284.0')
     testImplementation 'org.http4k:http4k-testing-webdriver'
+}
+
+application {
+    mainClass = 'lmirabal.bank.web.MainKt'
 }

@@ -28,6 +28,7 @@
         <tr>
             <th>ID</th>
             <th>Balance</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,16 @@
             <tr>
                 <td>{{id}}</td>
                 <td>{{balance}}</td>
+                <td>
+                    <form id="deposit-form" method="POST" action="/{{id}}/deposit">
+                        <input type="number" id="amount" name="amount"/>
+                        <button id="deposit">Deposit</button>
+                    </form>
+                    <form id="withdraw-form" method="POST" action="/{{id}}/withdraw">
+                        <input type="number" id="amount" name="amount"/>
+                        <button id="withdraw">Withdraw</button>
+                    </form>
+                </td>
             </tr>
         {{/accounts}}
         </tbody>

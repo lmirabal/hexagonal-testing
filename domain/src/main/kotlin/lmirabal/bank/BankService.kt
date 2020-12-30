@@ -1,9 +1,12 @@
 package lmirabal.bank
 
+import dev.forkhandles.result4k.Result
+import dev.forkhandles.result4k.peek
 import lmirabal.bank.data.BankAccountRepository
 import lmirabal.bank.model.Amount
 import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
+import lmirabal.bank.model.NotEnoughFunds
 
 class BankService(
     private val accountRepository: BankAccountRepository,
@@ -15,4 +18,16 @@ class BankService(
     }
 
     override fun listAccounts(): List<BankAccount> = accountRepository.list()
+
+    override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
+        val account = accountRepository.list().first { it.id == id }
+        return account.deposit(amount)
+            .also { updatedAccount -> accountRepository.update(updatedAccount) }
+    }
+
+    override fun withdraw(id: BankAccountId, amount: Amount): Result<BankAccount, NotEnoughFunds> {
+        val account = accountRepository.list().first { it.id == id }
+        return account.withdraw(amount)
+            .peek { updatedAccount -> accountRepository.update(updatedAccount) }
+    }
 }

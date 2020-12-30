@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    api 'dev.forkhandles:result4k:1.6.0.0'
+
     testFixturesImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testFixturesImplementation 'com.natpryce:hamkrest:1.8.0.1'
