@@ -12,7 +12,7 @@ data class BankAccount(val id: BankAccountId, val balance: Amount) {
 
     fun withdraw(amount: Amount): Result<BankAccount, NotEnoughFunds> {
         return if (amount <= balance) Success(copy(balance = balance - amount))
-        else Failure(NotEnoughFunds(id, balance, amount - balance))
+        else Failure(NotEnoughFunds(id, balance, additionalFundsRequired = amount - balance))
     }
 }
 
