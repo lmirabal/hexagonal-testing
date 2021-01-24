@@ -5,9 +5,9 @@ name: Kotlin CI with Gradle
 
 on:
   push:
-    branches: [ base ]
+    branches: [ main ]
   pull_request:
-    branches: [ base ]
+    branches: [ main ]
 
 jobs:
   build:
