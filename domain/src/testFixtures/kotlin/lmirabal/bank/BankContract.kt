@@ -9,7 +9,7 @@ import lmirabal.bank.model.Amount
 import lmirabal.bank.model.NotEnoughFunds
 import org.junit.jupiter.api.Test
 
-abstract class BankTest {
+abstract class BankContract {
     abstract val bank: Bank
 
     @Test

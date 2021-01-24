@@ -4,7 +4,7 @@ import dev.forkhandles.result4k.Failure
 import dev.forkhandles.result4k.Result
 import dev.forkhandles.result4k.Success
 import lmirabal.bank.Bank
-import lmirabal.bank.BankTest
+import lmirabal.bank.BankContract
 import lmirabal.bank.http.BankHttpClient
 import lmirabal.bank.http.bankHttp
 import lmirabal.bank.model.Amount
@@ -22,7 +22,7 @@ import org.openqa.selenium.WebElement
 import java.math.BigDecimal
 import java.util.UUID
 
-class BankWebTest : BankTest() {
+class BankWebTest : BankContract() {
     private val http: HttpHandler = bankHttp()
     private val httpClient: Bank = BankHttpClient(http)
     private val web: HttpHandler = bankWeb(httpClient)

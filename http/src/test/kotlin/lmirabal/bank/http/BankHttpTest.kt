@@ -1,7 +1,7 @@
 package lmirabal.bank.http
 
-import lmirabal.bank.BankTest
+import lmirabal.bank.BankContract
 
-class BankHttpTest : BankTest() {
+class BankHttpTest : BankContract() {
     override val bank = BankHttpClient(bankHttp())
 }
