@@ -9,25 +9,24 @@ import lmirabal.bank.model.BankAccountId
 import lmirabal.bank.model.NotEnoughFunds
 
 class BankService(
-    private val accountRepository: BankAccountRepository,
+    private val repository: BankAccountRepository,
     private val idFactory: () -> BankAccountId = { BankAccountId.random() }
 ) : Bank {
-    override fun createAccount(): BankAccount {
-        return BankAccount(idFactory(), Amount.ZERO)
-            .also { newAccount -> accountRepository.add(newAccount) }
-    }
+    override fun createAccount(): BankAccount =
+        BankAccount(idFactory(), Amount.ZERO)
+            .also { newAccount -> repository.add(newAccount) }
 
-    override fun listAccounts(): List<BankAccount> = accountRepository.list()
+    override fun listAccounts(): List<BankAccount> = repository.list()
 
     override fun deposit(id: BankAccountId, amount: Amount): BankAccount {
-        val account = accountRepository.list().first { it.id == id }
+        val account = repository.list().first { it.id == id }
         return account.deposit(amount)
-            .also { updatedAccount -> accountRepository.update(updatedAccount) }
+            .also { updatedAccount -> repository.update(updatedAccount) }
     }
 
     override fun withdraw(id: BankAccountId, amount: Amount): Result<BankAccount, NotEnoughFunds> {
-        val account = accountRepository.list().first { it.id == id }
+        val account = repository.list().first { it.id == id }
         return account.withdraw(amount)
-            .peek { updatedAccount -> accountRepository.update(updatedAccount) }
+            .peek { updatedAccount -> repository.update(updatedAccount) }
     }
 }
