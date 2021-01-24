@@ -3,7 +3,7 @@ package lmirabal.bank.http
 import dev.forkhandles.result4k.map
 import dev.forkhandles.result4k.recover
 import lmirabal.bank.Bank
-import lmirabal.bank.BankService
+import lmirabal.bank.BankLogic
 import lmirabal.bank.data.InMemoryBankAccountRepository
 import lmirabal.bank.model.Amount
 import lmirabal.bank.model.BankAccount
@@ -23,7 +23,7 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import java.util.UUID
 
-fun bankHttp() = bankHttp(BankService(InMemoryBankAccountRepository()))
+fun bankHttp() = bankHttp(BankLogic(InMemoryBankAccountRepository()))
 
 internal const val BANK_ACCOUNTS_BASE_URL = "/bank/accounts"
 internal const val BANK_ACCOUNT_DEPOSIT_PATH = "/{id}/deposit"

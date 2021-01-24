@@ -8,7 +8,7 @@ import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
 import lmirabal.bank.model.NotEnoughFunds
 
-class BankService(
+class BankLogic(
     private val repository: BankAccountRepository,
     private val idFactory: () -> BankAccountId = { BankAccountId.random() }
 ) : Bank {

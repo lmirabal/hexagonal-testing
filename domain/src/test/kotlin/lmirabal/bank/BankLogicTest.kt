@@ -8,9 +8,9 @@ import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
 import org.junit.jupiter.api.Test
 
-class BankServiceTest : BankTest() {
+class BankLogicTest : BankTest() {
     private val idFactory = RecordingIdFactory()
-    override val bank = BankService(InMemoryBankAccountRepository(), idFactory)
+    override val bank = BankLogic(InMemoryBankAccountRepository(), idFactory)
 
     @Test
     fun createsAnAccount() {
