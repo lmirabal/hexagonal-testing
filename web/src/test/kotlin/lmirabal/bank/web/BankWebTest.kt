@@ -11,7 +11,6 @@ import lmirabal.bank.model.Amount
 import lmirabal.bank.model.BankAccount
 import lmirabal.bank.model.BankAccountId
 import lmirabal.bank.model.NotEnoughFunds
-import lmirabal.selenium.getElement
 import lmirabal.selenium.getTableColumn
 import lmirabal.selenium.getTableRows
 import org.http4k.core.HttpHandler
@@ -34,7 +33,7 @@ class BankWebDriver(web: HttpHandler) : Bank {
 
     override fun createAccount(): BankAccount {
         driver.navigate().to("/")
-        driver.getElement(By.id("create-account")).submit()
+        driver.findElement(By.id("create-account")).submit()
 
         return driver.getBankAccounts().last()
     }
@@ -63,21 +62,22 @@ class BankWebDriver(web: HttpHandler) : Bank {
 
     override fun withdraw(id: BankAccountId, amount: Amount): Result<BankAccount, NotEnoughFunds> {
         submitBalanceChange(type = "withdraw", id, amount)
-        return if (driver.findElement(By.id("failure")) == null) {
-            Success(driver.getBankAccounts().first { account -> account.id == id })
-        } else {
-            val balance = driver.getElement(By.id("balance")).getAttribute("content")
-            val additionalFundsRequired = driver.getElement(By.id("additionalFundsRequired")).getAttribute("content")
+        val failureElements = driver.findElements(By.id("failure"))
+        return if (failureElements.isNotEmpty()) {
+            val balance = driver.findElement(By.id("balance")).getAttribute("content").orEmpty()
+            val additionalFundsRequired = driver.findElement(By.id("additionalFundsRequired")).getAttribute("content").orEmpty()
             Failure(NotEnoughFunds(id, balance.toAmount(), additionalFundsRequired.toAmount()))
+        } else {
+            Success(driver.getBankAccounts().first { account -> account.id == id })
         }
     }
 
     private fun submitBalanceChange(type: String, id: BankAccountId, amount: Amount) {
         val row = driver.getTableRows().first { row -> row.getBankAccountId() == id }
 
-        val form = row.getElement(By.id("$type-form"))
-        form.getElement(By.id("amount")).sendKeys(amount.format())
-        form.getElement(By.id(type)).submit()
+        val form = row.findElement(By.id("$type-form"))
+        form.findElement(By.id("amount")).sendKeys(amount.format())
+        form.findElement(By.id(type)).submit()
     }
 
     private fun WebElement.getBankAccountId(): BankAccountId {

@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.4.10' apply false
+    id 'org.jetbrains.kotlin.jvm' version '2.3.0' apply false
 }
 
 group = 'lmirabal'
@@ -14,25 +14,21 @@ subprojects {
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.1'
         testImplementation 'com.natpryce:hamkrest:1.8.0.1'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
     }
 
     test {
         useJUnitPlatform()
     }
 
-    compileKotlin {
-        kotlinOptions.jvmTarget = '11'
-    }
-
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = '11'
+    kotlin {
+        jvmToolchain(25)
     }
 }
 
 wrapper {
-    gradleVersion = '6.7.1'
+    gradleVersion = '9.2.1'
     distributionType = Wrapper.DistributionType.ALL
 }
