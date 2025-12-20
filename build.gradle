@@ -23,12 +23,8 @@ subprojects {
         useJUnitPlatform()
     }
 
-    compileKotlin {
-        kotlinOptions.jvmTarget = '25'
-    }
-
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = '25'
+    kotlin {
+        jvmToolchain(25)
     }
 }
 
