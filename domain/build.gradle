@@ -11,5 +11,5 @@ dependencies {
 }
 
 compileTestFixturesKotlin {
-    kotlinOptions.jvmTarget = '11'
+    kotlinOptions.jvmTarget = '25'
 }
